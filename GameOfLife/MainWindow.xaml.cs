@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.ComponentModel;
+using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Threading;
 using System.Collections.Generic;
@@ -21,6 +22,7 @@ namespace GameOfLife
         private string TotalStepsLabelText = Properties.Resources.TotalStepsLabelText;
 
         private Action EmptyAction = new Action(() => { });
+        private BackgroundWorker worker;
 
         #region Constructor 
 
@@ -80,12 +82,17 @@ namespace GameOfLife
             int steps = 0;
             if (lbfdp && ubfdp && sbfl1 && sbfl2 && rqfba)
             {
-                BackgroundWorker worker = new BackgroundWorker();
-                worker.DoWork += (o, dwea) => GOLNode.Map.ForEach(node => node.NodeRuling());
-                for (;;)
+                GOLNode.PathsFade = PathFadeToggle.IsChecked ?? false;
+                worker = new BackgroundWorker();
+                worker.WorkerSupportsCancellation = true;
+                worker.DoWork += (o, dwea) => Parallel.ForEach(
+                    GOLNode.Map,
+                    new ParallelOptions() { MaxDegreeOfParallelism = 51 }, 
+                    node => node.NodeRuling());
+                while (worker != null)
                 {
                     worker.RunWorkerAsync();
-                    while (worker.IsBusy)
+                    while (worker != null && worker.IsBusy)
                     {
                         Dispatcher.Invoke(DispatcherPriority.ContextIdle, EmptyAction);
                     }
@@ -94,14 +101,36 @@ namespace GameOfLife
                     AliveNodesLabel.Content = string.Format(AliveNodeLabelText, GOLNode.Map.Count(n => n.IsTaken));
                     LargestPopulationLabel.Content = string.Format(LargestPopLabelText, GOLNode.Map.Max(n => n.NeighborCount()));
                     TotalStepsLabel.Content = string.Format(TotalStepsLabelText, steps);
-                    GOLNode.Map.ForEach(node => node.SetNextAction(GOLNode.NodeAction.Waiting));
-                    GOLNode.Map.ForEach(node => node.DoNextAction());
+                    Dispatcher.Invoke(DispatcherPriority.ContextIdle, EmptyAction);
                 }
             }
             else
             {
                 MessageBox.Show(InputErrorMessage, InputErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+        /// <summary>
+        /// This sets the background worker to null. This stops the map from processing. 
+        /// If the user clicks start again, a new background worker is created 
+        /// and the process starts off where it left off. 
+        /// If the user clicks reset, then it will start over again.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Stop_Click(object sender, RoutedEventArgs e)
+        {
+            worker = null;
+        }
+        /// <summary>
+        /// This sets the background worker to null and resets each node in map.
+        /// This will not start where it left off if user clicks start again.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Reset_Click(object sender, RoutedEventArgs e)
+        {
+            worker = null;
+            GOLNode.Map.ForEach(node => node.ResetNode());
         }
         /// <summary>
         /// Sets a node to a certain state depending on its current state

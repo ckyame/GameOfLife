@@ -22,6 +22,7 @@ namespace GameOfLife
         public static int SBFL1 = 2; // Requirement for living 1
         public static int SBFL2 = 3; // Requirement for living 2
         public static int RQFBA = 3; // Requirement for becoming alive
+        public static bool PathsFade = false;
 
         public Button Node { get; set; }
 
@@ -46,7 +47,7 @@ namespace GameOfLife
         public GOLNode(Button node)
         {
             Node = node;
-            DefaultBrush = Brushes.Cyan;
+            DefaultBrush = Brushes.Black;
             Node.Background = Brushes.Black;
             Map.Add(this);
         }
@@ -68,6 +69,7 @@ namespace GameOfLife
         /// </summary>
         public void ResetNode()
         {
+            NextAction = NodeAction.Waiting;
             Node.Background = DefaultBrush;
             IsTaken = false;
         }
@@ -129,7 +131,7 @@ namespace GameOfLife
                         break;
                     }
             }
-            if (IsTaken == false && Node.Background == Brushes.PaleVioletRed)
+            if (PathsFade && (IsTaken == false && Node.Background == Brushes.PaleVioletRed))
             {
                 StepsWhileDeadCount += 1;
                 if (StepsWhileDeadCount > 8)
