@@ -1,0 +1,14 @@
+c:\users\keeame\documents\visual studio 2017\Projects\GameOfLife\GameOfLife\bin\Debug\GameOfLife.exe.config
+c:\users\keeame\documents\visual studio 2017\Projects\GameOfLife\GameOfLife\bin\Debug\GameOfLife.exe
+c:\users\keeame\documents\visual studio 2017\Projects\GameOfLife\GameOfLife\bin\Debug\GameOfLife.pdb
+c:\users\keeame\documents\visual studio 2017\Projects\GameOfLife\GameOfLife\obj\Debug\GameOfLife.csprojResolveAssemblyReference.cache
+c:\users\keeame\documents\visual studio 2017\Projects\GameOfLife\GameOfLife\obj\Debug\MainWindow.g.cs
+c:\users\keeame\documents\visual studio 2017\Projects\GameOfLife\GameOfLife\obj\Debug\App.g.cs
+c:\users\keeame\documents\visual studio 2017\Projects\GameOfLife\GameOfLife\obj\Debug\GameOfLife_MarkupCompile.cache
+c:\users\keeame\documents\visual studio 2017\Projects\GameOfLife\GameOfLife\obj\Debug\GameOfLife_MarkupCompile.lref
+c:\users\keeame\documents\visual studio 2017\Projects\GameOfLife\GameOfLife\obj\Debug\MainWindow.baml
+c:\users\keeame\documents\visual studio 2017\Projects\GameOfLife\GameOfLife\obj\Debug\GameOfLife.g.resources
+c:\users\keeame\documents\visual studio 2017\Projects\GameOfLife\GameOfLife\obj\Debug\GameOfLife.Properties.Resources.resources
+c:\users\keeame\documents\visual studio 2017\Projects\GameOfLife\GameOfLife\obj\Debug\GameOfLife.csproj.GenerateResource.Cache
+c:\users\keeame\documents\visual studio 2017\Projects\GameOfLife\GameOfLife\obj\Debug\GameOfLife.exe
+c:\users\keeame\documents\visual studio 2017\Projects\GameOfLife\GameOfLife\obj\Debug\GameOfLife.pdb
